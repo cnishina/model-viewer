@@ -1,0 +1,9 @@
+commit 14fe4bd221b63cdc1b6292915bb4578036bb2d24
+Author: Emmett Lalish <elalish@google.com>
+Date:   Fri Sep 27 16:47:54 2019 -0700
+
+    Fix over-spin reversal (#780)
+    
+    * fixed over-spin
+    
+    * updated doc
