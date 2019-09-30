@@ -1,5 +1,5 @@
 /* @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2019 Google LLC. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -158,6 +158,22 @@ suite('SmoothControls', () => {
           expect(controls.getCameraSpherical().theta)
               .to.be.closeTo(-QUARTER_PI, 0.0001);
         });
+
+        test(
+            'adjustOrbit does not move the goal theta more than pi past the current theta',
+            () => {
+              controls.adjustOrbit(-Math.PI * 3 / 2, 0, 0, 0);
+
+              controls.update(performance.now(), ONE_FRAME_DELTA);
+              const startingTheta = controls.getCameraSpherical().theta;
+              expect(startingTheta).to.be.greaterThan(0);
+
+              controls.adjustOrbit(-Math.PI * 3 / 2, 0, 0, 0);
+              settleControls(controls);
+              const goalTheta = controls.getCameraSpherical().theta;
+              expect(goalTheta).to.be.greaterThan(-Math.PI);
+              expect(goalTheta).to.be.lessThan(startingTheta - Math.PI);
+            });
       });
     });
 

@@ -1,5 +1,5 @@
 /* @license
- * Copyright 2018 Google Inc. All Rights Reserved.
+ * Copyright 2019 Google LLC. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -236,7 +236,9 @@ suite('ModelViewerElementBase with ControlsMixin', () => {
           await timePasses();
 
           expect(element.getFieldOfView()).to.be.closeTo(fieldOfView, 0.00001);
-          const orbit = element.getCameraOrbit();
+          let orbit = element.getCameraOrbit();
+          // round to nearest 0.0001
+          orbit.theta = Math.round(orbit.theta * 10000) / 10000;
           expect(`${orbit.theta}rad ${orbit.phi}rad ${orbit.radius}m`)
               .to.equal(cameraOrbit);
         });
